@@ -25,3 +25,6 @@ Customer = []
 def submit_data():
         if len(Customer) >= MAX_STOCK_FOR_EACH_PRODUCT_AVAILABLE:
             return messagebox.showerror("Sorry we are completely sold out of this product!")
+        
+
+        #does this work
