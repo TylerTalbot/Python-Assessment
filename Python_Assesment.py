@@ -15,7 +15,8 @@ root.configure(bg='grey')
 customers = []
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-# This is my space for all of my lists and constants
+# This is my space for all of my lists, constants, and dictionaries
+# I have categorized each of the products into dictionaries for a more organized approach
 
 PRICING = [
     #Furniture
@@ -38,11 +39,28 @@ Customer = []
 
 title_label = tk.Label(root, text="Please enter your information:", font=("sans-serif", 14, "bold"), bg="grey")
 title_label.grid(row=0, column=0, columnspan=4, pady=10)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
+title_label = tk.Label(root, text="There are 500 items for each product", font=("sans-serif", 14, "bold"), bg="grey")
+title_label.grid(row=1, column=0, columnspan=4, pady=10)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
 tk.Label(root, text="Name: ", fg="black", bg="grey", font=("sans-serif", 14, "bold")).grid(row=2, column=1, padx=10, pady=5)
 name_entry = tk.Entry(root, bg="darkgrey", width=15)
 name_entry.grid(row=3, column=1, padx=10, pady=5)
-name_label = tk.Label(root, text="", fg="Blue", font=("sans-serif", 12), bg="grey")
+name_label = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="grey")
 name_label.grid(row=10, column=1, padx=10, pady=2)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+# This is my input for the user to input how much of an item they want
+
+amount_label = tk.Label(root, text="Item Amount:", fg="black", bg="grey", font=("Sans serif", 14, "bold" )).grid(row=4, column=1, padx=10, pady=5)
+item_entry = tk.Entry(root, bg="darkgrey", width=15)
+item_entry.grid(row=5, column=1, padx=10, pady=5)
+item_label = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="grey")
+item_label.grid(row=10, column=2, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
