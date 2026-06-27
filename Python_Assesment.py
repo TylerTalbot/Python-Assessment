@@ -75,7 +75,7 @@ item_label.grid(row=10, column=2, padx=10, pady=2)
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
 tk.Label(root, text="Select Item: ", fg="black", bg="grey", font=("sans-serif", 14, "bold")).grid(row=4, column=2, padx=10, pady=5)
-item_dropdown = ttk.Combobox(root, values=list(PRICING.keys()), width=15)
+item_dropdown = ttk.Combobox(root, values=list(PRICING.keys()), state="readonly", width=15)
 item_dropdown.grid(row=5, column=2, padx=10, pady=5)
 item_dropdown.current(0) 
 
