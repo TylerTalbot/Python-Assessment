@@ -1,10 +1,13 @@
 import tkinter as tk
+import random
 from tkinter import messagebox
 from tkinter import ttk
 
+
 root = tk.Tk()
-root.geometry("400x400")
-root.grid_columnconfigure(2, weight=1)
+root.geometry("600x600")
+root.grid_columnconfigure(0, weight=1)
+root.grid_columnconfigure(3, weight=1)
 root.title("Party Hire Shop")
 root.configure(bg='lightblue')
 
@@ -31,24 +34,11 @@ TitleLabel.grid(row=0, column=0, columnspan=4, pady=10)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
-TitleLabel = tk.Label(root, text="There are 500 items for each product", font=("sans-serif", 14, "bold"), bg="lightblue")
-TitleLabel.grid(row=1, column=0, columnspan=4, pady=10)
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------
-
 tk.Label(root, text="Name: ", fg="black", bg="lightblue", font=("sans-serif", 14, "bold")).grid(row=2, column=1, padx=10, pady=5)
 NameEntry = tk.Entry(root, bg="white", width=15)
 NameEntry.grid(row=3, column=1, padx=10, pady=5)
 NameLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
 NameLabel.grid(row=10, column=1, padx=10, pady=2)
-
-#------------------------------------------------------------------------------------------------------------------------------------------------------
-
-amount_label = tk.Label(root, text="Item Amount:", fg="black", bg="lightblue", font=("Sans serif", 14, "bold" )).grid(row=4, column=1, padx=10, pady=5)
-ItemEntry = tk.Entry(root, bg="white", width=15)
-ItemEntry.grid(row=5, column=1, padx=10, pady=5)
-ItemLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
-ItemLabel.grid(row=11, column=1, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -60,6 +50,14 @@ LastNameLabel.grid(row=10, column=2, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
+tk.Label(root, text="Item Amount:", fg="black", bg="lightblue", font=("Sans serif", 14, "bold" )).grid(row=4, column=1, padx=10, pady=5)
+ItemEntry = tk.Entry(root, bg="white", width=15)
+ItemEntry.grid(row=5, column=1, padx=10, pady=5)
+ItemLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
+ItemLabel.grid(row=11, column=1, padx=10, pady=2)
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
 tk.Label(root, text="Select Item: ", fg="black", bg="lightblue", font=("sans-serif", 14, "bold")).grid(row=4, column=2, padx=10, pady=5)
 ItemDropdown = ttk.Combobox(root, values=list(PRICING.keys()), state="readonly", width=15)
 ItemDropdown.grid(row=5, column=2, padx=10, pady=5)
@@ -67,23 +65,42 @@ ItemDropdown.current(0)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
-def Submit():
-    Name = NameEntry.get()
-    LastName = LastNameEntry.get()
-    Dropdown = ItemDropdown.get()
-    Quantity = ItemEntry.get()
-    with open("receipt.txt", "w") as file:
-        file.write(".....RECEIPT..... \n")
-        file.write(f"Customer Name: {Name} {LastName}\n")
-        file.write(f"Item Selected: {Dropdown}\n")
-        file.write(f"Item Quantity: {Quantity}\n")
+def submission():
+    FirstName = NameEntry.get().strip().title()
+    LastName = LastNameEntry.get().strip().title()
+    Item = ItemDropdown.get()
+    Quantity = ItemEntry.get().strip()
+
+    if not FirstName or not LastName or not Quantity:
+        messagebox.showerror("Input Error", "All input boxes must be filled out")
+        return
+    
+    if not Quantity.isdigit() or int(Quantity) <= 0 or int(Quantity) > MAX_STOCK_FOR_EACH_PRODUCT_AVAILABLE:
+        messagebox.showerror("Input Error", "There is only a maximum of 500 items for each product")
+        return
+    
+    recipte = random.randint(10000, 99999)
+    Customer.append({"Recipte": recipte, "FirstName": FirstName, "LastName": LastName, "Item": Item, "Quantity": Quantity})
+    TreeView.insert("", tk.END, values=(recipte, FirstName, LastName, Item, Quantity))
+
+    NameEntry.delete(0, tk.END)
+    LastNameEntry.delete(0, tk.END)
+    ItemEntry.delete(0, tk.END)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Submit = tk.Button(root, text="Submit Order", bg="white", font=("sans-serif", 12, "bold"), command=Submit)
-Submit.grid(row=6, column=1, columnspan=2, pady=15)
+TreeView = ttk.Treeview(root, column=("First Name", "Last Name", "Item", "Quantity", "recipte"), show="headings", height=6)
+for col, text in [("First Name", "FirstName"), ("Last Name", "LastName"),("recipte", "recipte"),("Quantity", "Quantity")]:
+    TreeView.heading(col, text=text)
+    TreeView.column(col, width=90, anchor="center")
+TreeView.grid(row=6, column=1, columnspan=2, pady=20, sticky="")
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Submit = tk.Button(root, text="Submit Order", bg="white", font=("sans-serif", 12, "bold"), command=submission)
+Submit.grid(row=7, column=1, columnspan=2, pady=15)
 Receipt = tk.Button(root, text="Download Receipt", bg="white", font=("sans-serif", 12, "bold"))
-Receipt.grid(row=7, column=1, columnspan=2, pady=5)
+Receipt.grid(row=8, column=1, columnspan=2, pady=5)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
