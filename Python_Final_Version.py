@@ -117,7 +117,7 @@ def download_Recipte():
         return
     Amount = Tree_View.get_children()
 
-    with open("recipte.txt", "w") as file:
+    with open("recipte.txt", "a") as file:
         file.write("---Party Supplies Recipte---\n\n")
         for item in Amount:
             rows = Tree_View.item(item)['values']
@@ -151,7 +151,7 @@ Submit = tk.Button(root, text="Submit Order", bg="white", font=("sans-serif", 12
 Submit.grid(row=7, column=1, columnspan=2, pady=15)
 Receipt = tk.Button(root, text="Download Receipt", bg="white", font=("sans-serif", 12, "bold"), command=download_Recipte)
 Receipt.grid(row=8, column=1, columnspan=2, pady=5)
-Delete = tk.Button(root, text="Delete an Item", bg="white", font=("sans-serif", 12, "bold"), command=Delet_An_Item)
+Delete = tk.Button(root, text="Return an Item", bg="white", font=("sans-serif", 12, "bold"), command=Delet_An_Item)
 Delete.grid(row=9, column=1, columnspan=2, pady=5)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
