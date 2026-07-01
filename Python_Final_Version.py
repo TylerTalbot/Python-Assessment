@@ -81,7 +81,7 @@ def submission():
     
     recipte = random.randint(10000, 99999)
     Customer.append({"Recipte": recipte, "FirstName": FirstName, "LastName": LastName, "Item": Item, "Quantity": Quantity})
-    TreeView.insert("", tk.END, values=(recipte, FirstName, LastName, Item, Quantity))
+    TreeView.insert("", tk.END, values=(FirstName, LastName, Item, Quantity, recipte))
 
     NameEntry.delete(0, tk.END)
     LastNameEntry.delete(0, tk.END)
@@ -89,8 +89,50 @@ def submission():
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
+def DeletAnItem():
+    selected=TreeView.selection()
+    if not selected:
+        messagebox.showwarning("Selection Error", "Pls Click a row in the table to delete an order")
+        return
+    for item in selected:
+        remove = int(TreeView.item(item)['values'][4])
+
+        global Customer 
+        Customer = [c for c in Customer if c ["Recipte"] != remove]
+
+        TreeView.delete(item)
+    messagebox.showinfo("Deleted", "Item removed succesfully")
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
+def downloadRecipte():
+    if not Customer:
+        messagebox.showerror("Erro", "There are no active orders")
+    Amount = TreeView.get_children()
+
+    with open("recipte.txt", "w") as file:
+        file.write("---Party Supplies Recipte---\n\n")
+        for item in Amount:
+            rows = TreeView.item(item)['values']
+
+            FirstName = rows[0]
+            LastName = rows[1]
+            Item = rows[2]
+            Qnty = int(rows[3])
+            recipte = rows[4]
+
+            file.write("-------------------------------------\n")
+            file.write(f"You have bought {Item}\n")
+            file.write(f"Your name is {FirstName} {LastName}\n")
+            file.write(f"The quanity of {Item} you bought is {Qnty}\n")
+            file.write(f"Your recipt number is {recipte}\n")
+            file.write("-------------------------------------\n")
+    messagebox.showinfo("Saved", "Your recipte was saved succesfully")
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
 TreeView = ttk.Treeview(root, column=("First Name", "Last Name", "Item", "Quantity", "recipte"), show="headings", height=6)
-for col, text in [("First Name", "FirstName"), ("Last Name", "LastName"),("recipte", "recipte"),("Quantity", "Quantity")]:
+for col, text in [("First Name", "FirstName"), ("Last Name", "LastName"), ("Item", "Item"), ("Quantity", "Quantity"), ("recipte", "recipte")]:
     TreeView.heading(col, text=text)
     TreeView.column(col, width=90, anchor="center")
 TreeView.grid(row=6, column=1, columnspan=2, pady=20, sticky="")
@@ -99,8 +141,10 @@ TreeView.grid(row=6, column=1, columnspan=2, pady=20, sticky="")
 
 Submit = tk.Button(root, text="Submit Order", bg="white", font=("sans-serif", 12, "bold"), command=submission)
 Submit.grid(row=7, column=1, columnspan=2, pady=15)
-Receipt = tk.Button(root, text="Download Receipt", bg="white", font=("sans-serif", 12, "bold"))
+Receipt = tk.Button(root, text="Download Receipt", bg="white", font=("sans-serif", 12, "bold"), command=downloadRecipte)
 Receipt.grid(row=8, column=1, columnspan=2, pady=5)
+Delete = tk.Button(root, text="Delete an Item", bg="white", font=("sans-serif", 12, "bold"), command=DeletAnItem)
+Delete.grid(row=9, column=1, columnspan=2, pady=5)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
