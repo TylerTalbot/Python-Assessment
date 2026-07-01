@@ -102,6 +102,7 @@ def submission():
         return
     elif len(Last_Name) > 10:
         messagebox.showerror("Input Error", "The standard Last Name doesnt exceed 10 letters")
+        return
     else:
         recipte = random.randint(10000, 99999)
 
