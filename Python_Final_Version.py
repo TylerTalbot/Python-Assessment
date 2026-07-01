@@ -107,12 +107,14 @@ def Delet_An_Item():
 
         Tree_View.delete(item)
     messagebox.showinfo("Deleted", "Item removed succesfully")
+    return
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the part of my code that downloads the users inputs in the form of a txt file
 def download_Recipte():
     if not Customer:
         messagebox.showerror("Erro", "There are no active orders")
+        return
     Amount = Tree_View.get_children()
 
     with open("recipte.txt", "w") as file:
@@ -133,6 +135,7 @@ def download_Recipte():
             file.write(f"Your recipt number is {recipte}\n")
             file.write("-------------------------------------\n")
     messagebox.showinfo("Saved", "Your recipte was saved succesfully")
+    return
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the treeview where, when the code is running it displays the users inputs
