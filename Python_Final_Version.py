@@ -79,12 +79,33 @@ def submission():
     if not First_Name or not Last_Name or not Quantity:
         messagebox.showerror("Input Error", "All input boxes must be filled out")
         return
-    
-    if not Quantity.isdigit() or int(Quantity) <= 0 or int(Quantity) > MAX_STOCK_FOR_EACH_PRODUCT_AVAILABLE:
-        messagebox.showerror("Input Error", "There is only a maximum of 500 items for each product")
+    elif not Quantity.isdigit():
+        messagebox.showerror("Input Error", "The quanitity  must be a whole number")
         return
-    
-    recipte = random.randint(10000, 99999)
+    elif int(Quantity) <= 0 or int(Quantity) > MAX_STOCK_FOR_EACH_PRODUCT_AVAILABLE:
+        messagebox.showerror("Input Error", "The order quantity must stay between 1 and 500")
+        return
+    elif not First_Name.isalpha():
+        messagebox.showerror("Input Error", "First Name must only be letters")
+        return
+    elif not Last_Name.isalpha():
+        messagebox.showerror("Input Error", "Last Name must be only letters")
+        return
+    elif len(First_Name) <= 2:
+        messagebox.showerror("Input Error", "The standard Name is no shorter than 3 letters long")
+        return
+    elif len(Last_Name) <= 2:
+        messagebox.showerror("Input Error", "The standard Last Name is no shorter than 3 letters")
+        return
+    elif len(First_Name) > 10:
+        messagebox.showerror("Input Error", "The standard Name doesnt exceed 10 letters")
+        return
+    elif len(Last_Name) > 10:
+        messagebox.showerror("Input Error", "The standard Last Name doesnt exceed 10 letters")
+    else:
+        recipte = random.randint(10000, 99999)
+
+
     Customer.append({"Recipte": recipte, "FirstName": First_Name, "LastName": Last_Name, "Item": Item, "Quantity": Quantity})
     Tree_View.insert("", tk.END, values=(First_Name, Last_Name, Item, Quantity, recipte))
 
@@ -129,18 +150,18 @@ def download_Recipte():
             recipte = rows[4]
 
             file.write("-------------------------------------\n")
-            file.write(f"You have bought {Item}\n")
-            file.write(f"Your name is {First_Name} {Last_Name}\n")
-            file.write(f"The quanity of {Item} you bought is {Qnty}\n")
-            file.write(f"Your recipt number is {recipte}\n")
+            file.write(f"You have bought {Item.capitalize()}\n")
+            file.write(f"Your name is {First_Name.capitalize()} {Last_Name.capitalize()}\n")
+            file.write(f"The quanity of {Item.capitalize()} you bought is {Qnty}\n")
+            file.write(f"Your recipt number is {recipte.capitalize()}\n")
             file.write("-------------------------------------\n")
     messagebox.showinfo("Saved", "Your recipte was saved succesfully")
     return
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the treeview where, when the code is running it displays the users inputs
-Tree_View = ttk.Treeview(root, column=("First_Name", "Last_Name", "Item", "Quantity", "recipte"), show="headings", height=6)
-for col, text in [("First_Name", "First_Name"), ("Last_Name", "Last_Name"), ("Item", "Item"), ("Quantity", "Quantity"), ("recipte", "recipte")]:
+Tree_View = ttk.Treeview(root, column=("First Name", "Last Name", "Item", "Quantity", "recipte"), show="headings", height=6)
+for col, text in [("First Name", "First Name".capitalize()), ("Last Name", "Last Name".capitalize()), ("Item", "Item".capitalize()), ("Quantity", "Quantity"), ("recipte", "recipte")]:
     Tree_View.heading(col, text=text)
     Tree_View.column(col, width=90, anchor="center")
 Tree_View.grid(row=6, column=1, columnspan=2, pady=20, sticky="")
