@@ -71,12 +71,12 @@ Item_Dropdown.current(0)
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the part of my code that validates the users input, and transfers the users input into the treeview
 def submission():
-    FirstName = Name_Entry.get().strip().title()
-    LastName = Last_Name_Entry.get().strip().title()
+    First_Name = Name_Entry.get().strip().title()
+    Last_Name = Last_Name_Entry.get().strip().title()
     Item = Item_Dropdown.get()
     Quantity = Item_Entry.get().strip()
 
-    if not FirstName or not LastName or not Quantity:
+    if not First_Name or not Last_Name or not Quantity:
         messagebox.showerror("Input Error", "All input boxes must be filled out")
         return
     
@@ -85,8 +85,8 @@ def submission():
         return
     
     recipte = random.randint(10000, 99999)
-    Customer.append({"Recipte": recipte, "FirstName": FirstName, "LastName": LastName, "Item": Item, "Quantity": Quantity})
-    TreeView.insert("", tk.END, values=(FirstName, LastName, Item, Quantity, recipte))
+    Customer.append({"Recipte": recipte, "FirstName": First_Name, "LastName": Last_Name, "Item": Item, "Quantity": Quantity})
+    Tree_View.insert("", tk.END, values=(First_Name, Last_Name, Item, Quantity, recipte))
 
     Name_Entry.delete(0, tk.END)
     Last_Name_Entry.delete(0, tk.END)
@@ -94,41 +94,41 @@ def submission():
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the part of my code that will delete and order for a user if they click on it via the treeview, then click the delete button it will delete that order
-def DeletAnItem():
-    selected=TreeView.selection()
+def Delet_An_Item():
+    selected=Tree_View.selection()
     if not selected:
         messagebox.showwarning("Selection Error", "Pls Click a row in the table to delete an order")
         return
     for item in selected:
-        remove = int(TreeView.item(item)['values'][4])
+        remove = int(Tree_View.item(item)['values'][4])
 
         global Customer 
         Customer = [c for c in Customer if c ["Recipte"] != remove]
 
-        TreeView.delete(item)
+        Tree_View.delete(item)
     messagebox.showinfo("Deleted", "Item removed succesfully")
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the part of my code that downloads the users inputs in the form of a txt file
-def downloadRecipte():
+def download_Recipte():
     if not Customer:
         messagebox.showerror("Erro", "There are no active orders")
-    Amount = TreeView.get_children()
+    Amount = Tree_View.get_children()
 
     with open("recipte.txt", "w") as file:
         file.write("---Party Supplies Recipte---\n\n")
         for item in Amount:
-            rows = TreeView.item(item)['values']
+            rows = Tree_View.item(item)['values']
 
-            FirstName = rows[0]
-            LastName = rows[1]
+            First_Name = rows[0]
+            Last_Name = rows[1]
             Item = rows[2]
             Qnty = int(rows[3])
             recipte = rows[4]
 
             file.write("-------------------------------------\n")
             file.write(f"You have bought {Item}\n")
-            file.write(f"Your name is {FirstName} {LastName}\n")
+            file.write(f"Your name is {First_Name} {Last_Name}\n")
             file.write(f"The quanity of {Item} you bought is {Qnty}\n")
             file.write(f"Your recipt number is {recipte}\n")
             file.write("-------------------------------------\n")
@@ -136,19 +136,19 @@ def downloadRecipte():
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the treeview where, when the code is running it displays the users inputs
-TreeView = ttk.Treeview(root, column=("First Name", "Last Name", "Item", "Quantity", "recipte"), show="headings", height=6)
-for col, text in [("First Name", "FirstName"), ("Last Name", "LastName"), ("Item", "Item"), ("Quantity", "Quantity"), ("recipte", "recipte")]:
-    TreeView.heading(col, text=text)
-    TreeView.column(col, width=90, anchor="center")
-TreeView.grid(row=6, column=1, columnspan=2, pady=20, sticky="")
+Tree_View = ttk.Treeview(root, column=("First_Name", "Last_Name", "Item", "Quantity", "recipte"), show="headings", height=6)
+for col, text in [("First_Name", "First_Name"), ("Last_Name", "Last_Name"), ("Item", "Item"), ("Quantity", "Quantity"), ("recipte", "recipte")]:
+    Tree_View.heading(col, text=text)
+    Tree_View.column(col, width=90, anchor="center")
+Tree_View.grid(row=6, column=1, columnspan=2, pady=20, sticky="")
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 #This is the code for my buttons on my GUI, their function use and aesthetics, and geometry. This is where the Button is designed and the commanded code is its purpose
 Submit = tk.Button(root, text="Submit Order", bg="white", font=("sans-serif", 12, "bold"), command=submission)
 Submit.grid(row=7, column=1, columnspan=2, pady=15)
-Receipt = tk.Button(root, text="Download Receipt", bg="white", font=("sans-serif", 12, "bold"), command=downloadRecipte)
+Receipt = tk.Button(root, text="Download Receipt", bg="white", font=("sans-serif", 12, "bold"), command=download_Recipte)
 Receipt.grid(row=8, column=1, columnspan=2, pady=5)
-Delete = tk.Button(root, text="Delete an Item", bg="white", font=("sans-serif", 12, "bold"), command=DeletAnItem)
+Delete = tk.Button(root, text="Delete an Item", bg="white", font=("sans-serif", 12, "bold"), command=Delet_An_Item)
 Delete.grid(row=9, column=1, columnspan=2, pady=5)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
