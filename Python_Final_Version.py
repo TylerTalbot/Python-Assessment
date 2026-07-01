@@ -34,47 +34,47 @@ Customer = []
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is a title for the GUI, requesting that the user inpu their information for their purchace
-TitleLabel = tk.Label(root, text="Please enter your information: ", font=("sans-serif", 14, "bold"), bg="lightblue")
-TitleLabel.grid(row=0, column=0, columnspan=4, pady=10)
+Title_Label = tk.Label(root, text="Please enter your information: ", font=("sans-serif", 14, "bold"), bg="lightblue")
+Title_Label.grid(row=0, column=0, columnspan=4, pady=10)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the input for the user to type their Name for the order
 tk.Label(root, text="Name: ", fg="black", bg="lightblue", font=("sans-serif", 14, "bold")).grid(row=2, column=1, padx=10, pady=5)
-NameEntry = tk.Entry(root, bg="white", width=15)
-NameEntry.grid(row=3, column=1, padx=10, pady=5)
-NameLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
-NameLabel.grid(row=10, column=1, padx=10, pady=2)
+Name_Entry = tk.Entry(root, bg="white", width=15)
+Name_Entry.grid(row=3, column=1, padx=10, pady=5)
+Name_Label = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
+Name_Label.grid(row=10, column=1, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the input for the user to input their last name, while not nessesary it is valid for their full name
 tk.Label(root, text="Last Name: ", fg="Black", bg="lightblue", font=("sans-serif", 14, "bold")).grid(row=2, column=2, padx=10, pady=5)
-LastNameEntry = tk.Entry(root, bg="white", width=15)
-LastNameEntry.grid(row=3, column=2, padx=10, pady=5)
-LastNameLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
-LastNameLabel.grid(row=10, column=2, padx=10, pady=2)
+Last_Name_Entry = tk.Entry(root, bg="white", width=15)
+Last_Name_Entry.grid(row=3, column=2, padx=10, pady=5)
+Last_Name_Label = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
+Last_Name_Label.grid(row=10, column=2, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the input for the user to select how much of the select Item they would like, as long it is in the range of 1 to 500
 tk.Label(root, text="Item Amount:", fg="black", bg="lightblue", font=("Sans serif", 14, "bold" )).grid(row=4, column=1, padx=10, pady=5)
-ItemEntry = tk.Entry(root, bg="white", width=15)
-ItemEntry.grid(row=5, column=1, padx=10, pady=5)
-ItemLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
-ItemLabel.grid(row=11, column=1, padx=10, pady=2)
+Item_Entry = tk.Entry(root, bg="white", width=15)
+Item_Entry.grid(row=5, column=1, padx=10, pady=5)
+Item_Label = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="lightblue")
+Item_Label.grid(row=11, column=1, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the input in the form of a dropdown menu for the user to seolect which item that would like to purchace
 tk.Label(root, text="Select Item: ", fg="black", bg="lightblue", font=("sans-serif", 14, "bold")).grid(row=4, column=2, padx=10, pady=5)
-ItemDropdown = ttk.Combobox(root, values=list(PRICING.keys()), state="readonly", width=15)
-ItemDropdown.grid(row=5, column=2, padx=10, pady=5)
-ItemDropdown.current(0) 
+Item_Dropdown = ttk.Combobox(root, values=list(PRICING.keys()), state="readonly", width=15)
+Item_Dropdown.grid(row=5, column=2, padx=10, pady=5)
+Item_Dropdown.current(0) 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the part of my code that validates the users input, and transfers the users input into the treeview
 def submission():
-    FirstName = NameEntry.get().strip().title()
-    LastName = LastNameEntry.get().strip().title()
-    Item = ItemDropdown.get()
-    Quantity = ItemEntry.get().strip()
+    FirstName = Name_Entry.get().strip().title()
+    LastName = Last_Name_Entry.get().strip().title()
+    Item = Item_Dropdown.get()
+    Quantity = Item_Entry.get().strip()
 
     if not FirstName or not LastName or not Quantity:
         messagebox.showerror("Input Error", "All input boxes must be filled out")
@@ -88,9 +88,9 @@ def submission():
     Customer.append({"Recipte": recipte, "FirstName": FirstName, "LastName": LastName, "Item": Item, "Quantity": Quantity})
     TreeView.insert("", tk.END, values=(FirstName, LastName, Item, Quantity, recipte))
 
-    NameEntry.delete(0, tk.END)
-    LastNameEntry.delete(0, tk.END)
-    ItemEntry.delete(0, tk.END)
+    Name_Entry.delete(0, tk.END)
+    Last_Name_Entry.delete(0, tk.END)
+    Item_Entry.delete(0, tk.END)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # This is the part of my code that will delete and order for a user if they click on it via the treeview, then click the delete button it will delete that order
