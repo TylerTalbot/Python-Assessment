@@ -1,9 +1,12 @@
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+# This is the part of my code for the imports
 import tkinter as tk
 import random
 from tkinter import messagebox
 from tkinter import ttk
 
-
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+# This is the part of my code for th geometry and the centering of the GUI, including the color of the GUI, and the header of the GUI
 root = tk.Tk()
 root.geometry("600x600")
 root.grid_columnconfigure(0, weight=1)
@@ -11,6 +14,8 @@ root.grid_columnconfigure(3, weight=1)
 root.title("Party Hire Shop")
 root.configure(bg='lightblue')
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+# This is the part of my code for the dictionaries, lists, and constants
 PRICING = {
     #Furniture
     "Chairs": 2, "Tables": 5,
@@ -28,12 +33,12 @@ MAX_STOCK_FOR_EACH_PRODUCT_AVAILABLE = 500
 Customer = []
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is a title for the GUI, requesting that the user inpu their information for their purchace
 TitleLabel = tk.Label(root, text="Please enter your information: ", font=("sans-serif", 14, "bold"), bg="lightblue")
 TitleLabel.grid(row=0, column=0, columnspan=4, pady=10)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the input for the user to type their Name for the order
 tk.Label(root, text="Name: ", fg="black", bg="lightblue", font=("sans-serif", 14, "bold")).grid(row=2, column=1, padx=10, pady=5)
 NameEntry = tk.Entry(root, bg="white", width=15)
 NameEntry.grid(row=3, column=1, padx=10, pady=5)
@@ -41,7 +46,7 @@ NameLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="ligh
 NameLabel.grid(row=10, column=1, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the input for the user to input their last name, while not nessesary it is valid for their full name
 tk.Label(root, text="Last Name: ", fg="Black", bg="lightblue", font=("sans-serif", 14, "bold")).grid(row=2, column=2, padx=10, pady=5)
 LastNameEntry = tk.Entry(root, bg="white", width=15)
 LastNameEntry.grid(row=3, column=2, padx=10, pady=5)
@@ -49,7 +54,7 @@ LastNameLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="
 LastNameLabel.grid(row=10, column=2, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the input for the user to select how much of the select Item they would like, as long it is in the range of 1 to 500
 tk.Label(root, text="Item Amount:", fg="black", bg="lightblue", font=("Sans serif", 14, "bold" )).grid(row=4, column=1, padx=10, pady=5)
 ItemEntry = tk.Entry(root, bg="white", width=15)
 ItemEntry.grid(row=5, column=1, padx=10, pady=5)
@@ -57,14 +62,14 @@ ItemLabel = tk.Label(root, text="", fg="grey", font=("sans-serif", 12), bg="ligh
 ItemLabel.grid(row=11, column=1, padx=10, pady=2)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the input in the form of a dropdown menu for the user to seolect which item that would like to purchace
 tk.Label(root, text="Select Item: ", fg="black", bg="lightblue", font=("sans-serif", 14, "bold")).grid(row=4, column=2, padx=10, pady=5)
 ItemDropdown = ttk.Combobox(root, values=list(PRICING.keys()), state="readonly", width=15)
 ItemDropdown.grid(row=5, column=2, padx=10, pady=5)
 ItemDropdown.current(0) 
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the part of my code that validates the users input, and transfers the users input into the treeview
 def submission():
     FirstName = NameEntry.get().strip().title()
     LastName = LastNameEntry.get().strip().title()
@@ -88,7 +93,7 @@ def submission():
     ItemEntry.delete(0, tk.END)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the part of my code that will delete and order for a user if they click on it via the treeview, then click the delete button it will delete that order
 def DeletAnItem():
     selected=TreeView.selection()
     if not selected:
@@ -104,7 +109,7 @@ def DeletAnItem():
     messagebox.showinfo("Deleted", "Item removed succesfully")
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the part of my code that downloads the users inputs in the form of a txt file
 def downloadRecipte():
     if not Customer:
         messagebox.showerror("Erro", "There are no active orders")
@@ -130,7 +135,7 @@ def downloadRecipte():
     messagebox.showinfo("Saved", "Your recipte was saved succesfully")
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the treeview where, when the code is running it displays the users inputs
 TreeView = ttk.Treeview(root, column=("First Name", "Last Name", "Item", "Quantity", "recipte"), show="headings", height=6)
 for col, text in [("First Name", "FirstName"), ("Last Name", "LastName"), ("Item", "Item"), ("Quantity", "Quantity"), ("recipte", "recipte")]:
     TreeView.heading(col, text=text)
@@ -138,7 +143,7 @@ for col, text in [("First Name", "FirstName"), ("Last Name", "LastName"), ("Item
 TreeView.grid(row=6, column=1, columnspan=2, pady=20, sticky="")
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+#This is the code for my buttons on my GUI, their function use and aesthetics, and geometry. This is where the Button is designed and the commanded code is its purpose
 Submit = tk.Button(root, text="Submit Order", bg="white", font=("sans-serif", 12, "bold"), command=submission)
 Submit.grid(row=7, column=1, columnspan=2, pady=15)
 Receipt = tk.Button(root, text="Download Receipt", bg="white", font=("sans-serif", 12, "bold"), command=downloadRecipte)
@@ -147,5 +152,7 @@ Delete = tk.Button(root, text="Delete an Item", bg="white", font=("sans-serif", 
 Delete.grid(row=9, column=1, columnspan=2, pady=5)
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# This is the end of my code, It is ended with a root.mainloop()
 root.mainloop()
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
